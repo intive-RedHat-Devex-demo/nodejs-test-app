@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: nodejs-test-app
+  labels:
+    app: nodejs-test-app
+    app.kubernetes.io/component: backstage
+    backstage.io/kubernetes-id: demo-dev
+    argocd.argoproj.io/instance: nodejs-test-app
+    argocd/app-name: nodejs-test-app
+    argocd/app-selector: nodejs-test-app
+spec:
+  ports:
+    - name: http-3000
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
+  selector:
+    app: nodejs-test-app

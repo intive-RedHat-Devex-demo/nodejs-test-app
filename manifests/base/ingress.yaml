@@ -1,0 +1,29 @@
+apiVersion: config.openshift.io/v1
+kind: Ingress
+metadata:
+  name: nodejs-test-app
+  namespace: demo-dev
+  labels:
+    app: nodejs-test-app
+    app.kubernetes.io/component: backstage
+    backstage.io/kubernetes-id: demo-dev
+    argocd.argoproj.io/instance: nodejs-test-app
+    argocd/app-name: nodejs-test-app
+    argocd/app-selector: nodejs-test-app
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - "https://nodejs-test-app-demo-dev-apps.rosa.e5n9l5l2t8z7q0d.qnbq.p3.openshiftapps.com"
+      secretName: nodejs-test-app-tls
+  rules:
+  - host: "https://nodejs-test-app-demo-dev-apps.rosa.e5n9l5l2t8z7q0d.qnbq.p3.openshiftapps.com"
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: nodejs-test-app
+              port:
+                number: 3000
